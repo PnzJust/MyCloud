@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Storage";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@{
+
+    var allFiles = ViewData["allFiles"] as List<String>;
+    if (allFiles.Count() == 0)
+    {
+        <p> Nu sunt fisiere</p>
+    }
+    else
+    {
+        foreach (var file in allFiles)
+        {
+<div class="col-md-4 col-lg-4 col-sm-4">
+
+    @{var file_name = @file.Split('\\').Last();}
+
+    @Html.Label("Name", "Name:")
+    <p>@file_name</p>
+
+    <a href="/MyStorage/Delete/@file_name/" class="btn btn-danger">Delete</a>
+    @if (@file_name.EndsWith(".txt"))
+    {
+        <a href="/MyStorage/Open/@file_name/" class="btn btn-primary">Open</a>
+    }
+    <a href="/MyStorage/Encrypt/@file_name/" class="btn btn-success">Encrypt</a>
+    <a href="/MyStorage/Decrypt/@file_name/" class="btn btn-warning">Decrypt</a>
+    <a href="/MyStorage/Rename/@file_name/" class="btn btn-info">Rename</a>
+    <a href="/MyStorage/Download/@file_name/" class="btn btn-default">Download</a>
+    <br />
+
+</div>
+            }
+
+    }
+}
