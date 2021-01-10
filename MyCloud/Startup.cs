@@ -42,6 +42,10 @@ namespace MyCloud
                 {
                     userManager.AddToRole(user.Id, "Admin");
                 }
+                // Create Admin storage path
+                string path = @"C:\ALL\";
+                Directory.CreateDirectory(path + user.Id);
+
             }
         }
 

@@ -4,6 +4,11 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
+<form method="post" action="/MyStorage/Upload" enctype="multipart/form-data">
+    <input type="file" class="input-file" name="file" />
+    <input type="submit" />
+</form>
+
 @{
 
     var allFiles = ViewData["allFiles"] as List<String>;
@@ -29,8 +34,7 @@
     }
     <a href="/MyStorage/Encrypt/@file_name/" class="btn btn-success">Encrypt</a>
     <a href="/MyStorage/Decrypt/@file_name/" class="btn btn-warning">Decrypt</a>
-    <a href="/MyStorage/Rename/@file_name/" class="btn btn-info">Rename</a>
-    <a href="/MyStorage/Download/@file_name/" class="btn btn-default">Download</a>
+    <a href="/MyStorage/Download/@file_name/" class="btn btn-info">Download</a>
     <br />
 
 </div>
