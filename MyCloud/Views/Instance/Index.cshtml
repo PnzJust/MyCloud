@@ -4,8 +4,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<br />
 
 @Html.ActionLink("Create instance", "New")
+<br />
+<br />
 
 @{
     var allInstances = ViewBag.Instances;
@@ -17,15 +20,22 @@
     {
         foreach (var instance in allInstances)
         {
-            <div class="panel-body">
-                @Html.Label("Name", "Name:")
-                <br />
-                <p>@instance.InstanceName</p>
-                @using(Html.BeginForm(actionName : "Details", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id= instance.InstanceId}))
-                {
-                    <button style="margin-left:5px" type="submit" class="btn btn-primary">Details</button>
-                }
+            <div class="panel-body" style="border: 1px solid red; border-top-style: dotted; border-right-style:solid; border-bottom-style: dotted; border-left-style:solid; background-color: lightgray">
+                <div class="row" >
+                    <div class="col-md-10">
+                        <p>Name: @instance.InstanceName</p>
+                        <p>Ip: @instance.InstanceIp</p>
+                        <p>Port: @instance.InstancePort</p>
+                    </div>
+                    <div class="col-md-1" >
+                        @using (Html.BeginForm(actionName: "Details", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id = instance.InstanceId }))
+                        {
+                            <button style="float:right" type="submit" class="btn btn-primary">More Details</button>
+                        }
+                    </div>
+                </div>
             </div>
+            <br />
         }
     }
 

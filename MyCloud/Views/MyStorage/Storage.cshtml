@@ -9,36 +9,53 @@
     <input type="submit" />
 </form>
 
+<br />
+<br />
+<br />
+<br />
+
+<script>
+    function encrypt(name) {
+        var password = prompt("Insert a passcode to encrypt (8 characters)");
+        if (password != null) { location.replace("/MyStorage/Encrypt/" + name + "/" + password); }
+    }
+    function decrypt(name) {
+        var password = prompt("Insert a passcode to decrypt(8 characters)");
+        if (password != null) { location.replace("/MyStorage/Decrypt/" + name + "/" + password); }
+    }
+</script>
 @{
 
     var allFiles = ViewData["allFiles"] as List<String>;
     if (allFiles.Count() == 0)
     {
-        <p> Nu sunt fisiere</p>
+        <p> There are no files uploated.</p>
     }
     else
     {
         foreach (var file in allFiles)
         {
-<div class="col-md-4 col-lg-4 col-sm-4">
+            <div class="col-md-4 col-lg-4 col-sm-4" style="border-radius: 7px; border: 3px solid red; border-top-style: dotted; border-right-style:solid; border-bottom-style: dotted; border-left-style:solid; background-color: lightgray">
 
-    @{var file_name = @file.Split('\\').Last();}
+                @{var file_name = @file.Split('\\').Last();}
 
-    @Html.Label("Name", "Name:")
-    <p>@file_name</p>
+                <strong><p>Name: @file_name</p></strong>
 
-    <a href="/MyStorage/Delete/@file_name/" class="btn btn-danger">Delete</a>
-    @if (@file_name.EndsWith(".txt"))
-    {
-        <a href="/MyStorage/Open/@file_name/" class="btn btn-primary">Open</a>
-    }
-    <a href="/MyStorage/Encrypt/@file_name/" class="btn btn-success">Encrypt</a>
-    <a href="/MyStorage/Decrypt/@file_name/" class="btn btn-warning">Decrypt</a>
-    <a href="/MyStorage/Download/@file_name/" class="btn btn-info">Download</a>
-    <br />
+                <a href="/MyStorage/Delete/@file_name/" class="btn btn-danger col-sm-4">Delete</a>
+                @if (@file_name.EndsWith(".txt"))
+                {
+                    <a href="/MyStorage/Open/@file_name/" class="btn btn-primary col-sm-4">Open</a>
+                }
 
-</div>
-            }
+                <button class="btn btn-success col-sm-4" onclick="encrypt('@file_name')">Encrypt</button>
+
+                <button class="btn col-sm-4" style="background-color:brown" onclick="decrypt('@file_name')">Decrypt</button>
+                <a href="/MyStorage/Download/@file_name/" class="btn btn-info col-sm-4">Download</a>
+                <br />
+            </div>
+
+
+        }
 
     }
 }

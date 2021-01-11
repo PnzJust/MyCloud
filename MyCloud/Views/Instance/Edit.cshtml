@@ -25,13 +25,16 @@
     @Html.EditorFor(i => i.InstanceName, new { HtmlTextWriterAttribute = new { @class = "form-control" } })
 
     @Html.ValidationMessageFor(i => i.InstanceName, "", new { @class = "text-danger" })
-    
+
     <br />
-    
+
     @Html.Label("Description", "Description:")
     <br />
     @Html.EditorFor(i => i.InstanceDescription, new { HtmlTextWriterAttribute = new { @class = "form-control" } })
 
     @Html.ValidationMessageFor(i => i.InstanceDescription, "", new { @class = "text-danger" })
+    <br />
+    <br />
     <button class="btm btn-primary" type="submit">Update</button>
+
 }

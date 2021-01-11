@@ -18,6 +18,18 @@ namespace MyCloud
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Encrypt",
+                url: "MyStorage/Encrypt/{id}/{key}",
+                defaults: new { controller = "MyStorage", action = "Encrypt", id = UrlParameter.Optional, key = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Decrypt",
+                url: "MyStorage/Decrypt/{id}/{key}",
+                defaults: new { controller = "MyStorage", action = "Decrypt", id = UrlParameter.Optional, key = UrlParameter.Optional }
+            );
         }
     }
 }

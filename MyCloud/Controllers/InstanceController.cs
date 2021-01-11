@@ -8,6 +8,7 @@ using Renci.SshNet;
 
 namespace MyCloud.Controllers
 {
+    [Authorize]
     public class InstanceController : Controller
     {
         private DbCtx db = new DbCtx();
@@ -94,7 +95,7 @@ namespace MyCloud.Controllers
             {
                 if(ModelState.IsValid)
                 {
-                    Instance instance = db.Instances.SingleOrDefault(i => i.InstanceName.Equals(id));
+                    Instance instance = db.Instances.SingleOrDefault(i => i.InstanceId.Equals(id));
                     
                     if(TryUpdateModel(instance))
                     {
@@ -115,22 +116,97 @@ namespace MyCloud.Controllers
         [HttpDelete]
         public ActionResult Delete(string id)
         {
-            Instance instance = db.Instances.Find(id);
-            if (instance != null)
+            try
             {
-                SshClient sshclient = new SshClient("192.168.56.104", "test1234", "test1234");
-                sshclient.Connect();
-                SshCommand sc = sshclient.CreateCommand(@"sudo docker stop " + instance.InstanceId.ToString());
-                sc.Execute();
-                sc = sshclient.CreateCommand(@"sudo docker rm  " + instance.InstanceId.ToString());
-                sc.Execute();
-                sshclient.Disconnect();
+                Instance instance = db.Instances.Find(id);
+                if (instance != null)
+                {
+                    SshClient sshclient = new SshClient("192.168.56.104", "test1234", "test1234");
+                    sshclient.Connect();
+                    SshCommand sc = sshclient.CreateCommand(@"sudo docker stop " + instance.InstanceId.ToString());
+                    sc.Execute();
+                    sc = sshclient.CreateCommand(@"sudo docker rm  " + instance.InstanceId.ToString());
+                    sc.Execute();
+                    sshclient.Disconnect();
 
-                db.Instances.Remove(instance);
-                db.SaveChanges();
+                    db.Instances.Remove(instance);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return HttpNotFound("Couldn't find the instance with id " + id.ToString());
+            }
+            catch (Exception e)
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Enable(string id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Instance instance = db.Instances.SingleOrDefault(i => i.InstanceId.Equals(id));
+                    if (instance != null)
+                    {
+                        SshClient sshclient = new SshClient("192.168.56.104", "test1234", "test1234");
+                        sshclient.Connect();
+                        SshCommand sc = sshclient.CreateCommand(@"sudo docker start " + instance.InstanceId.ToString());
+                        sc.Execute();
+                        sc = sshclient.CreateCommand(@"sudo docker exec " + instance.InstanceId.ToString() + @" sh -c /usr/sbin/sshd");
+                        sc.Execute();
+                        sshclient.Disconnect();
+
+                        if (TryUpdateModel(instance))
+                        {
+                            instance.InstanceIsOn = true;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    return HttpNotFound("Couldn't find the instance with id " + id.ToString());
+                }
                 return RedirectToAction("Index");
             }
-            return HttpNotFound("Couldn't find the instance with id " + id.ToString());
+            catch (Exception e)
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Disable(string id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Instance instance = db.Instances.SingleOrDefault(i => i.InstanceId.Equals(id));
+                    if (instance != null)
+                    {
+                        SshClient sshclient = new SshClient("192.168.56.104", "test1234", "test1234");
+                        sshclient.Connect();
+                        SshCommand sc = sshclient.CreateCommand(@"sudo docker stop " + instance.InstanceId.ToString());
+                        sc.Execute();
+                        sshclient.Disconnect();
+
+                        if (TryUpdateModel(instance))
+                        {
+                            instance.InstanceIsOn = false;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    return HttpNotFound("Couldn't find the instance with id " + id.ToString());
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return View("Error");
+            }
         }
     }
 }

@@ -3,36 +3,84 @@
     ViewBag.Title = "Details";
 }
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    function copy() {
+        var copyText = document.getElementById("copy");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+    }
+</script>
 <h1>@Model.InstanceName</h1>
 
-@Html.Label("Name", "Name:");
 <br />
-<p>@Model.InstanceName</p>
+<p>Name: @Model.InstanceName</p>
 
-@Html.Label("Password", "Password:");
 <br />
-<p>@Model.InstancePasswd</p>
+<p>Default password: @Model.InstancePasswd</p>
 
-@Html.Label("Description", "Description:");
 <br />
-<p>@Model.InstanceDescription</p>
+<p>Description: @Model.InstanceDescription</p>
 
-@Html.Label("Ip", "Ip:");
 <br />
-<p>@Model.InstanceIp</p>
+<p>IP: @Model.InstanceIp</p>
 
-@Html.Label("Port", "Port:");
+
 <br />
-<p>@Model.InstancePort</p>
+<p>Port: @Model.InstancePort</p>
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id = Model.InstanceId }))
-{
-    <button style="margin-right:5px" class="btn btn-primary col-lg-1" type="submit">Update</button>
-}
+<br />
+<p id="copy" type="text">Connection command: <strong>ssh -p @Model.InstancePort cloud@@@Model.InstanceIp </strong></p>
+<!-- <button class="fa fa-clipboard" style="font-size:24px" onclick="copy()"></button> -->
 
-@using (Html.BeginForm(actionName: "Delete", controllerName: "Instance", method: FormMethod.Post, routeValues: new { id = Model.InstanceId }))
-{
-    @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button class="btn btn-primary col-lg-1" type="submit">Delete</button>
-}
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1">
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id = Model.InstanceId }))
+            {
+                <button style="margin-right:5px" class="btn btn-primary col-lg-1" type="submit">Update</button>
+            }
+        </div>
+
+        <div class="col-sm-1">
+            @using (Html.BeginForm(actionName: "Delete", controllerName: "Instance", method: FormMethod.Post, routeValues: new { id = Model.InstanceId }))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-primary col-lg-1" type="submit">Delete</button>
+            }
+
+        </div>
+        <div class="col-sm-1">
+            @if (Model.InstanceIsOn != true)
+            {
+                using (Html.BeginForm(actionName: "Enable", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id = Model.InstanceId }))
+                {
+                    <button class="btn btn-success" type="submit">Enable</button>
+                }
+            }
+            else
+            {
+                <button:disabled class="btn" style="background:#808080">Enable</button:disabled>
+            }
+
+        </div>
+        <div class="col-sm-1">
+            @if (Model.InstanceIsOn == true)
+            {
+                using (Html.BeginForm(actionName: "Disable", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id = Model.InstanceId }))
+                {
+                    <button class="btn btn-danger" type="submit">Disable</button>
+                }
+            }
+            else
+            {
+                <button:disabled class="btn" style="background:#808080">Disable</button:disabled>
+            }
+        </div>
+    </div>
+</div>
+
 <br />

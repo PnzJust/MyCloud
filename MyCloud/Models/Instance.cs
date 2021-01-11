@@ -17,6 +17,9 @@ namespace MyCloud.Models
         public string InstanceId { get; set; }
 
         [Column("instance_name")]
+        [Required]
+        [RegularExpression(@"^([A-Z0-9])*$", ErrorMessage = "Name should be uppercase and letters only")]
+        [MinLength(3, ErrorMessage = "Name could not be less than 3 characters")]
         public string InstanceName { get; set; }
         [Column("instance_passwd")]
         public string InstancePasswd { get; set; }
@@ -29,6 +32,8 @@ namespace MyCloud.Models
         [Column("instance_ison")]
         public bool InstanceIsOn { get; set; }
         [Column("instance_description")]
+        [Required]
+        //[]
         public string InstanceDescription { get; set; }
         public Instance()
         {
@@ -53,7 +58,7 @@ namespace MyCloud.Models
     {
         protected override void Seed (DbCtx ctx)
         {
-            ctx.Instances.Add(new Instance { InstanceId = @"0000", InstanceName = @"NNNN", InstancePasswd = @"passwd",InstanceIp = @"IP", InstancePort = 1025, InstanceIsOn = true, InstanceDescription=@"Descrierea vietii" });
+            //ctx.Instances.Add(new Instance { InstanceId = @"0000", InstanceName = @"NNNN", InstancePasswd = @"passwd",InstanceIp = @"IP", InstancePort = 1025, InstanceIsOn = true, InstanceDescription=@"Descrierea vietii" });
             ctx.SaveChanges();
             base.Seed(ctx);
         }

@@ -16,7 +16,7 @@ namespace MyCloud.Controllers
 
         public ActionResult Storage()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Storage page.";
 
             return View();
         }
@@ -30,7 +30,7 @@ namespace MyCloud.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Personal details.";
 
             return View();
         }

@@ -6,7 +6,14 @@
     <title>MyCloud</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/104815.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,6 +31,10 @@
                     <li>@Html.ActionLink("Storage", "Storage", "MyStorage")</li>
                     <li>@Html.ActionLink("Instances", "Index", "Instance")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
