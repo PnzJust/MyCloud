@@ -106,3 +106,5 @@ C:\Users\k\Desktop\MyCloud\MyCloud\bin\Microsoft.CodeDom.Providers.DotNetCompile
 C:\Users\k\Desktop\MyCloud\MyCloud\obj\Debug\MyCloud.csproj.CopyComplete
 C:\Users\k\Desktop\MyCloud\MyCloud\obj\Debug\MyCloud.dll
 C:\Users\k\Desktop\MyCloud\MyCloud\obj\Debug\MyCloud.pdb
+C:\Users\k\Desktop\MyCloud\MyCloud\bin\Renci.SshNet.dll
+C:\Users\k\Desktop\MyCloud\MyCloud\bin\Renci.SshNet.xml

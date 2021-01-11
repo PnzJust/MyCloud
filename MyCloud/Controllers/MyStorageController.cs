@@ -37,7 +37,7 @@ namespace MyCloud.Controllers
         {
             string path = @"C:\ALL\" + User.Identity.GetUserId() + @"\" + id;
             if (!System.IO.File.Exists(path)) // does not exists
-                return View("~/Shared/Error");
+                return View("Error");
 
             string text = "";
             // Open the stream and read it back.

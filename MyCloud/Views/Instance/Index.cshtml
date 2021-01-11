@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Instances";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ActionLink("Create instance", "New")
+
+@{
+    var allInstances = ViewBag.Instances;
+    if (allInstances == null)
+    {
+        <p>There are no active instances.</p>
+    }
+    else
+    {
+        foreach (var instance in allInstances)
+        {
+            <div class="panel-body">
+                @Html.Label("Name", "Name:")
+                <br />
+                <p>@instance.InstanceName</p>
+                @using(Html.BeginForm(actionName : "Details", controllerName: "Instance", method: FormMethod.Get, routeValues: new { id= instance.InstanceId}))
+                {
+                    <button style="margin-left:5px" type="submit" class="btn btn-primary">Details</button>
+                }
+            </div>
+        }
+    }
+
+}

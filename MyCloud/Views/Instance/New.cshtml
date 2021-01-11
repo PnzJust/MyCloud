@@ -1,0 +1,33 @@
+﻿@model MyCloud.Models.Instance
+@{
+    ViewBag.Title = "Start";
+}
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Instance", method: FormMethod.Post))
+{
+
+
+    @Html.HiddenFor(i => i.InstanceId, "")
+
+    @Html.HiddenFor(i => i.InstanceIp, "")
+
+    @Html.HiddenFor(i => i.InstancePort, "")
+
+    @Html.HiddenFor(i => i.InstancePasswd, "")
+
+
+    @Html.Label("Name", "Name:")
+    <br />
+    @Html.TextBoxFor(i => i.InstanceName, null, new { placeholder = "Type the instance's name", @class = "form-control" })
+
+    @Html.ValidationMessageFor(i => i.InstanceName, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.Label("Description", "Description:")
+    <br />
+    @Html.TextBoxFor(i => i.InstanceDescription, null, new { placeholder = "Type the instance's Description", @class = "form-control" })
+
+    @Html.ValidationMessageFor(i => i.InstanceDescription, "", new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-primary" type="sumbit">Create</button>
+}
