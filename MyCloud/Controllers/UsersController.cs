@@ -7,6 +7,8 @@ using MyCloud.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using System.IO;
+using System;
 
 namespace MyCloud.Controllers
 {
@@ -75,6 +77,35 @@ namespace MyCloud.Controllers
 
                     user.UserName = uvm.User.Email;
                     user.Email = uvm.User.Email;
+                    ctx.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return View(uvm);
+            }
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id, UserViewModel uvm)
+        {
+            ApplicationUser user = ctx.Users.Find(id);
+            
+            try
+            {
+                if (TryUpdateModel(user))
+                {
+                    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
+                    um.Delete(user);
+                    string path = @"C:\ALL\" + User.Identity.GetUserId() + @"\";
+                    string[] files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+                    foreach (string file in files)
+                    {
+                        System.IO.File.Delete(file);
+                    }
+                    Directory.Delete(path);
                     ctx.SaveChanges();
                 }
                 return RedirectToAction("Index");

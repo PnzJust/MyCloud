@@ -20,6 +20,10 @@
     {
         foreach (var instance in allInstances)
         {
+            if (instance.InstanceId == @"Invalid")
+            {
+                continue;
+            }
             <div class="panel-body" style="border: 1px solid red; border-top-style: dotted; border-right-style:solid; border-bottom-style: dotted; border-left-style:solid; background-color: lightgray">
                 <div class="row" >
                     <div class="col-md-10">

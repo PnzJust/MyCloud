@@ -25,3 +25,12 @@
 
     <button class="btn btn-sm btn-success" type="submit">Save changes</button>
 }
+
+@using (Html.BeginForm(actionName: "Delete", controllerName: "Users", routeValues: new { id = @Model.User.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    @Html.HiddenFor(m => m.User.Id)
+    <br />
+
+    <button class="btn btn-sm btn-danger" type="submit">Delete user</button>
+}

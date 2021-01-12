@@ -58,7 +58,7 @@ namespace MyCloud.Models
     {
         protected override void Seed (DbCtx ctx)
         {
-            //ctx.Instances.Add(new Instance { InstanceId = @"0000", InstanceName = @"NNNN", InstancePasswd = @"passwd",InstanceIp = @"IP", InstancePort = 1025, InstanceIsOn = true, InstanceDescription=@"Descrierea vietii" });
+            ctx.Instances.Add(new Instance { InstanceId = @"Invalid", InstanceName = @"NNNN", InstancePasswd = @"passwd",InstanceIp = @"IP", InstancePort = 1025, InstanceIsOn = true, InstanceDescription=@"Descrierea vietii" });
             ctx.SaveChanges();
             base.Seed(ctx);
         }
